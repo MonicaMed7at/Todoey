@@ -12,9 +12,16 @@ class TodoListViewController: UITableViewController {
 
     var itemArray = ["shopping", "duties", "outing"]
     
+    let defults = UserDefaults.standard
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        if let items = defults.array(forKey: "TodoeyListArray") as? [String] {
+            
+            itemArray = items
+        }
+        
     }
 
     //MARK - TableView Datasource Method
@@ -66,6 +73,8 @@ class TodoListViewController: UITableViewController {
             //MARK - What will happen once user clicks on Add Item in our alert
             
             self.itemArray.append(textField.text!)
+            
+            self.defults.set(self.itemArray, forKey: "TodoeyListArray")
             
             self.tableView.reloadData()
             
